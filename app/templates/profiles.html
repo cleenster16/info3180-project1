@@ -9,11 +9,11 @@
         <div class="profile-card">
             <div class="profile-info">
 
-                <img src="{{ url_for('static', filename='images/'+profile.profilePhoto) }}" class="" alt=path/>
+                <img src="{{ url_for('static', filename='images/'+profile.profilePhoto) }}" class="profilephoto" alt=path/>
 
                 {{ profile.first_name }} {{ profile.last_name }} <br>
                 {{ profile.gender }} {{ profile.location }}
-                <a href="{{url_for('uniqueProfile',userid=user.id)}}" class="btn btn-primary btn-block">View Profile</a>
+                <a href="{{url_for('uniqueProfile',userid=profile.id)}}" class="btn btn-primary btn-block">View Profile</a>
             </div>        
         </div>
     {% endfor %}

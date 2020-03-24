@@ -5,7 +5,7 @@
 <h2 class="page-header"></h2>
 <div>
     <h3>{{user.first_name}} {{user.last_name}}</h3>
-    <p> <img src="{{url_for('static',filename=images/+user.profilePhoto) }}"/>
+    <p> <img src="{{ url_for('static', filename='images/'+user.profilePhoto) }}" class = "profilephoto"/>
     {{user.email}} <br> {{user.location}} <br> Joined on {{user.created_on}}</p>
     <h5> About Me </h5>
     <p> {{user.biography}}</p>

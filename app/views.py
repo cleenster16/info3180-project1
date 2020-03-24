@@ -5,7 +5,7 @@ from app.forms import ProfileForm
 from app.models import UserProfile
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
-from datetime import datetime as dateFormat
+from datetime import datetime
 
 @app.route('/')
 def home():
@@ -40,20 +40,20 @@ def getUploadedImages():
 def profile():
     form = ProfileForm()
 
-    if request.method == 'POST' and newProfileForm.validate_on_submit():
+    if request.method == 'POST' and form.validate_on_submit():
         profilePhoto = form.photo.data
         filename = secure_filename(profilePhoto.filename)
         profilePhoto.save(os.path.join(
             app.config['UPLOAD_FOLDER'],filename))
         newUser = UserProfile(
-            first_name = newProfileForm.first_name.data,
-            last_name = newProfileForm.last_name.data,
-            email = newProfileForm.email.data,
-            location = newProfileForm.location.data,
-            gender = newProfileForm.gender.data,
-            biography = newProfileForm.biography.data,
+            first_name = form.first_name.data,
+            last_name = form.last_name.data,
+            email = form.email.data,
+            location = form.location.data,
+            gender = form.gender.data,
+            biography = form.biography.data,
             profilePhoto = filename,
-            created_on = format_date_joined(dateFormat.now)
+            created_on = datetime.now().strftime("%B %d, %Y")
         )
         db.session.add(newUser)
         db.session.commit()

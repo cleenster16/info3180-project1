@@ -1,3 +1,16 @@
 body {
     padding-top: 5rem;
 }
+.photo{
+    padding: 30px 30px 30px 30px;
+    text-align: center;
+    overflow: auto;
+}
+
+.profilephoto{
+    height: 150px;
+    width: 150px;
+    padding: 0;
+    border: 1px solid black;
+    border-radius: 100%;
+}
