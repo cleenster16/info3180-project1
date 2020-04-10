@@ -6,6 +6,9 @@ from app.models import UserProfile
 from werkzeug.security import check_password_hash
 from werkzeug.utils import secure_filename
 from datetime import datetime
+from flask_fontawesome import FontAwesome
+
+fa = FontAwesome(app)
 
 @app.route('/')
 def home():
@@ -22,7 +25,7 @@ def about():
 ###
 
 def format_date_joined(date_joined):
-    return "Joined " + date_joined.strftime("%B, %Y")
+    return "Joined " + date_joined.strftime("%B %d, %Y")
 
 #Iterate over contents of uploads folder and returns list of filenames.
 def getUploadedImages():
@@ -31,10 +34,8 @@ def getUploadedImages():
     for subdir, dirs, files in os.walk(rootDirect + app.config['UPLOAD_FOLDER']):
         for file in files:
             if file.endswith(tuple([".jpg", ".png"])):
-                #pathList.append(os.path.join(subdir, file))
-                pathList.append("uploads/" + os.path.basename(file))
+                pathList.append("images/" + os.path.basename(file))
     return pathList
-###
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -58,26 +59,29 @@ def profile():
         db.session.add(newUser)
         db.session.commit()
         flash('You have successfully added a new profile.', 'success')
-        pictures = getUploadedImages()
-        return redirect(url_for('profiles', pictures = pictures))
+        return redirect(url_for('profiles'))
     return render_template('profile.html', form=form)
 
 @app.route('/profiles')
 def profiles():
     profiles = db.session.query(UserProfile).all()
+    if not profiles:
+        flash('No users found.','danger')
+        return redirect(url_for('profile'))
     return render_template('profiles.html', profiles = profiles)
 
 @app.route('/profile/<int:userid>')
 def uniqueProfile(userid):
     user = db.session.query(UserProfile).filter_by(id=userid).first()
-    return render_template('uniqueProfile.html', user = user)
-
-
+    if user is not None:
+        return render_template('uniqueProfile.html', user = user)
+    else:
+        flash('User does not exist.','danger')
+        return redirect(url_for('home'))
 
 ###
 # The functions below should be applicable to all Flask apps.
 ###
-
 
 @app.route('/<file_name>.txt')
 def send_text_file(file_name):
@@ -95,7 +99,6 @@ def add_header(response):
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
     response.headers['Cache-Control'] = 'public, max-age=0'
     return response
-
 
 @app.errorhandler(404)
 def page_not_found(error):

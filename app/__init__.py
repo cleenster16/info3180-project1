@@ -9,8 +9,6 @@ app.config['SECRET_KEY'] = x
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://project1owner:project1password123@localhost/project1"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True # added just to suppress a warning
 
-
-# UPLOAD_FOLDER = './app/static/images'
 app.config['UPLOAD_FOLDER'] = './app/static/images'
 
 db = SQLAlchemy(app)

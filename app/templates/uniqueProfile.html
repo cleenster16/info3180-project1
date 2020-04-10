@@ -2,13 +2,29 @@
 
 {% block main %}
 
-<h2 class="page-header"></h2>
-<div>
-    <h3>{{user.first_name}} {{user.last_name}}</h3>
-    <p> <img src="{{ url_for('static', filename='images/'+user.profilePhoto) }}" class = "profilephoto"/>
-    {{user.email}} <br> {{user.location}} <br> Joined on {{user.created_on}}</p>
-    <h5> About Me </h5>
-    <p> {{user.biography}}</p>
+<div class="uniqueProfile">
+    <h2 class="page-header"></h2>
+    <div class="profile-box card top-border">
+        <div class="top-half d-flex mb-3 flex-row align-items-center">
+            <img src="{{ url_for('static', filename='images/'+user.profilePhoto) }}" class = "profile-photo m-2"/>
+            <div class="top-right ml-2 pl-5 d-flex flex-column justify-content-center">
+                <h2 class="name"> {{user.first_name}} {{user.last_name}} </h2>
+                <p class="info">
+                    <i class="fas fa-envelope pr-2"></i>{{user.email}} <br>
+                    <i class="fas fa-map-marker-alt pr-2"></i>{{user.location}} <br> 
+                    <i class="fas fa-calendar pr-2"></i><span>Joined on {{user.created_on}}</span>
+                </p>
+            </div>
+        </div>
+        <div class="bottom-half m-2">
+            <h3> About Me </h3>
+            <p> {{user.biography}} </p>
+        </div>
+        <div class="card-btns pt-4 text-center">
+            <a href="#" class="btn btn-success col-md-4 hover accent">Send Message</a>
+            <a href="#" class="btn btn-primary col-md-4 hover primary">Follow</a>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
