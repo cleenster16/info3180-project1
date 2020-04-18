@@ -7,14 +7,13 @@
     {% include 'flash_messages.html' %}
     {% for profile in profiles %}
         <div class="profile-card card d-flex mb-3 flex-row align-items-center top-border">
-            <div class="profile-pic p-4">
+            <div class="profile-pic p-4 ">
                 <img src="{{ url_for('static', filename='images/'+profile.profilePhoto) }}" class="profilephoto" alt=path/>
             </div>
             <div class="profile-info p-4 d-flex flex-column justify-content-center">
-                <h5 class="font-weight-bold"><span class="glyphicon glyphicon-user"></span>{{ profile.first_name}} {{ profile.last_name }} </h5>
+                <h5 class="font-weight-bold"><span class="glyphicon glyphicon-user"></span>{{ profile.first_name }} {{ profile.last_name }} </h5>
                 <p class="my-0"><i class="fas fa-user pr-2"></i>{{ profile.gender }}</p>
                 <p class="my-0"><i class="fas fa-map-marker-alt pr-2"></i>{{ profile.location }}</p>
-                
             </div> 
             <div class="profile-btn p-4 mx-auto">
                 <a class="text-decoration-none" href="{{url_for('uniqueProfile',userid=profile.id)}}"><button class="btn btn-success uniqueProfileBtn p-0">View Profile</button></a>

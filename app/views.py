@@ -39,9 +39,8 @@ def getUploadedImages():
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
-    form = ProfileForm()
-
-    if request.method == 'POST' and form.validate_on_submit():
+    form = ProfileForm() 
+    if form.validate_on_submit():
         profilePhoto = form.photo.data
         filename = secure_filename(profilePhoto.filename)
         profilePhoto.save(os.path.join(
