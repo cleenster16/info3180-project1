@@ -16,7 +16,12 @@
                 <p class="my-0"><i class="fas fa-map-marker-alt pr-2"></i>{{ profile.location }}</p>
             </div> 
             <div class="profile-btn p-4 mx-auto">
-                <a class="text-decoration-none" href="{{url_for('uniqueProfile',userid=profile.id)}}"><button class="btn btn-success uniqueProfileBtn p-0">View Profile</button></a>
+                <a class="text-decoration-none" href="{{url_for('uniqueProfile',userid=profile.id)}}"><button class="btn btn-success px-5">View Profile</button></a>
+            </div>
+            <div class="p-4 mx-auto">
+                <form method="POST" action="{{ url_for('delete',userid=profile.id) }}">
+                    <input type="submit" value="Delete" class="btn btn-danger px-5">
+                </form>
             </div>
         </div>
     {% endfor %}       

@@ -40,19 +40,27 @@ def getUploadedImages():
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
     form = ProfileForm() 
-    if form.validate_on_submit():
+    if request.method == "POST" and form.validate_on_submit():
         profilePhoto = form.photo.data
         filename = secure_filename(profilePhoto.filename)
         profilePhoto.save(os.path.join(
             app.config['UPLOAD_FOLDER'],filename))
         newUser = UserProfile(
-            first_name = form.first_name.data,
-            last_name = form.last_name.data,
-            email = form.email.data,
-            location = form.location.data,
-            gender = form.gender.data,
-            biography = form.biography.data,
-            profilePhoto = filename,
+            # first_name = form.first_name.data,
+            # last_name = form.last_name.data,
+            # email = form.email.data,
+            # location = form.location.data,
+            # gender = form.gender.data,
+            # biography = form.biography.data,
+            # profilePhoto = filename,
+
+            request.form['first_name'], 
+            request.form['last_name'], 
+            request.form['email'], 
+            request.form['location'], 
+            request.form['gender'], 
+            request.form['biography'], 
+            filename, 
             created_on = datetime.now().strftime("%B %d, %Y")
         )
         db.session.add(newUser)
@@ -65,7 +73,7 @@ def profile():
 def profiles():
     profiles = db.session.query(UserProfile).all()
     if not profiles:
-        flash('No users found.','danger')
+        flash('No user profiles found. Please add.','danger')
         return redirect(url_for('profile'))
     return render_template('profiles.html', profiles = profiles)
 
@@ -77,6 +85,14 @@ def uniqueProfile(userid):
     else:
         flash('User does not exist.','danger')
         return redirect(url_for('home'))
+
+@app.route("/delete/<int:userid>", methods=["POST"])
+def delete(userid):
+    profileToDelete = db.session.query(UserProfile).filter_by(id=userid).first()
+    db.session.delete(profileToDelete)
+    db.session.commit()
+    flash('Profile deleted successfully.','success')
+    return redirect("/profiles")
 
 ###
 # The functions below should be applicable to all Flask apps.

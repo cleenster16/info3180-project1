@@ -3,7 +3,7 @@ from . import db
 class UserProfile(db.Model):
     __tablename__ = 'user_profiles'
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column(db.String(150))
     last_name = db.Column(db.String(150))
     email = db.Column(db.String(150), unique=True)
