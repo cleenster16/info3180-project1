@@ -6,7 +6,7 @@
     <h2 class="page-header">Profiles</h2>
     {% include 'flash_messages.html' %}
     {% for profile in profiles %}
-        <div class="profile-card card d-flex mb-3 flex-lg-row align-items-lg-center justify-content-sm-center top-border">
+        <div class="profile-card card d-flex mb-3 flex-row align-items-center top-border">
             <div class="profile-pic p-4 mx-sm-auto">
                 <img src="{{ url_for('static', filename='images/'+profile.profilePhoto) }}" class="profilephoto" alt=path/>
             </div>
